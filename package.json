@@ -1,0 +1,10 @@
+{
+  "name": "im.juliank.orbit",
+  "version": "0.1.0",
+  "description": "Construct, manipulate, and visualize graph structures.",
+  "displayName": "Orbit",
+  "author": {
+    "name": "Julian Kim",
+    "email": "kimjulian@grinnell.edu"
+  }
+}
