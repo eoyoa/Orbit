@@ -7,6 +7,7 @@ using UnityEngine;
 public class TestGraph : MonoBehaviour
 {
     public List<GameObject> vertices = new();
+    public List<EdgeSegment> edges = new();
     public GameObject edgePrefab;
     
     private Graph<GameObject> _graph;
@@ -31,10 +32,26 @@ public class TestGraph : MonoBehaviour
                     return;
                 }
 
-                var edge = Instantiate(edgePrefab, (v.transform.position + w.transform.position) / 2,
+                var edgeObject = Instantiate(edgePrefab, (v.transform.position + w.transform.position) / 2,
                     Quaternion.identity);
-                edge.GetComponent<Edge>().v = v;
-                edge.GetComponent<Edge>().w = w;
+                var edge = edgeObject.GetComponent<EdgeSegment>();
+                edge.v = v;
+                edge.w = w;
+
+                var putInList = true;
+                foreach (var otherEdge in edges.Where(otherEdge => (otherEdge.v == edge.v && otherEdge.w == edge.w) ||
+                                                                   (otherEdge.v == edge.w && otherEdge.w == edge.v)))
+                {
+                    putInList = false;
+                }
+
+                if (!putInList)
+                {
+                    Destroy(edgeObject);
+                    continue;
+                }
+
+                edges.Add(edge);
             }
         }
     }
